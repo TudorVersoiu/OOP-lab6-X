@@ -42,11 +42,11 @@ int UI::runPrompt()
 
 	try {
 		switch (user_input) {
-			case Commands_t::AddCar:			addCar();           break;
-			case Commands_t::RemoveCar:			removeCar();        break;
-			case Commands_t::UpdateCar:			updateCar();        break;
+            case Commands_t::AddCar:            addCar();           break;
+			case Commands_t::RemoveCar:         removeCar();        break;
+			case Commands_t::UpdateCar:         updateCar();        break;
 			case Commands_t::PrintAllCars:      printAllCars();     break;
-			case Commands_t::SearchCar:	        searchCar();        break;
+			case Commands_t::SearchCar:         searchCar();        break;
 			case Commands_t::FilteredPrint:     filteredPrint();    break;
 			case Commands_t::SortedPrint:       sortedPrint();      break;
 			case Commands_t::Exit:              std::cerr << "Exitting application!";   return 0;
