@@ -1,8 +1,9 @@
 #include "TestController.h"
+#include "Repository.h"
 #include <cassert>
 #include <exception>
 
-void TestAdd(Controller& test_controller)
+void TestAdd_Search(Controller& test_controller)
 {
 	test_controller.addCar("GJ 35 GTR", "Nissan", "R35-GTR", "Supercar");
 	test_controller.addCar("CJ 01 JFK", "Dacia" , "1310"   , "Supercar");
@@ -15,10 +16,9 @@ void TestAdd(Controller& test_controller)
 	assert(test_controller.searchCar("GJ 22 GTR")->getNRInmatriculare() == "GJ 22 GTR");
 
 	try {
-		test_controller.addCar("GJ 35 GTR", "Nissan", "R35-GTR", "Supercar");
-		assert(false);
+		test_controller.addCar("GJ 35 GTR", "Nissan", "R35-GTR", "Supercar"); assert(false);
 	}
-	catch (std::exception) {
+	catch (repository_exception&) {
 		assert(true);
 	}
 }
@@ -40,7 +40,7 @@ void TestRemove(Controller& test_controller)
 		test_controller.removeCar("GJ 35 GTR");
 		assert(false);
 	}
-	catch (std::exception) {
+	catch (repository_exception&) {
 		assert(true);
 	}
 }
@@ -79,12 +79,11 @@ void TestController()
 {
 	Controller test_controller;
 
-	TestAdd(test_controller);
+	TestAdd_Search(test_controller);
 	TestRemove(test_controller);
 
 	// Adaugam din nou chestii in controller
-	TestAdd(test_controller);
-	//
+	TestAdd_Search(test_controller);
 
 	TestModify(test_controller);
 

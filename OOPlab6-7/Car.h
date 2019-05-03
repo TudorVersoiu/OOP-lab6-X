@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 
-class Car
-{
+class Car {
 	std::string NRInmatriculare;
 	std::string producator;
 	std::string model;
@@ -11,8 +10,7 @@ public:
 	Car(const std::string& NRInmatriculare, const std::string& producator,
 		const std::string& model, const std::string& tip);
 
-	Car(const Car& other);
-
+    // Getters
 	const std::string& getNRInmatriculare() const noexcept;
 	const std::string& getproducator() const noexcept;
 	const std::string& getmodel() const noexcept;
@@ -20,5 +18,6 @@ public:
 
 	bool operator<(const Car& other) noexcept;
 
+    // output car
 	friend std::ostream& operator<<(std::ostream&, const Car&);
 };

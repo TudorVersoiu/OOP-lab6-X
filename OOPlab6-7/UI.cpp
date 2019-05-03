@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <exception>
+#include <functional>
 
 // Define it here so it's not visible from the header
 enum Commands_t {
@@ -37,88 +38,82 @@ int UI::runPrompt()
 	for (std::map<Commands_t, std::string>::iterator it = menu.begin(); it != menu.end(); it++)
 		std::cout << it->first << "." << it->second << '\n';
 
-	// Reading user input and display prompt
-	int user_input; std::cout << ">>: "; std::cin >> user_input;
+	// Read user input and display prompt
+    int user_input; std::cout << ">>: "; std::cin >> user_input; std::cin.get();
+    
 
 	try {
 		switch (user_input) {
             case Commands_t::AddCar:            addCar();           break;
-			case Commands_t::RemoveCar:         removeCar();        break;
-			case Commands_t::UpdateCar:         updateCar();        break;
-			case Commands_t::PrintAllCars:      printAllCars();     break;
-			case Commands_t::SearchCar:         searchCar();        break;
-			case Commands_t::FilteredPrint:     filteredPrint();    break;
-			case Commands_t::SortedPrint:       sortedPrint();      break;
-			case Commands_t::Exit:              std::cerr << "Exitting application!";   return 0;
-			default:                            std::cerr << "Comanda invalida!";       break;
+            case Commands_t::RemoveCar:         removeCar();        break;
+            case Commands_t::UpdateCar:         updateCar();        break;
+            case Commands_t::PrintAllCars:      printAllCars();     break;
+            case Commands_t::SearchCar:         searchCar();        break;
+            case Commands_t::FilteredPrint:     filteredPrint();    break;
+            case Commands_t::SortedPrint:       sortedPrint();      break;
+            case Commands_t::Exit:              std::cerr << "Exitting application!";   return 0;
+            default:                            std::cerr << "Comanda invalida!";       break;
 		}
 	}
-	catch (std::domain_error& Eroare) {
-		std::cerr << "Domain error(Element Duplicat/Neexistent)";
+	catch (const repository_exception& eroare) {
+		std::cerr << eroare.what() << '\n';
 	}
-	
+
 
 	return 1; // Continue to run
 }
 
 // Functii ajutatoare pentru citirea datelor despre masina //
-void readNRInmatriculare(std::string& nrInmatriculare) {
-	std::cout << "Introduceti un nr de inmatriculare!\n";
-	std::cin >> nrInmatriculare;
+void readField(std::string& field, const std::string& prompt, std::function<void(const std::string&)> validate) {
+    while ( true )
+    {
+        std::cout << prompt << ": ";
+        std::getline(std::cin, field);
+        try {
+            validate(field);
+            return;
+        }
+        catch (const validation_exception& err) {
+            std::cout << err.what() << '\n';
+        }
+    }
 }
 
-void readProducator(std::string& producator) {
-	std::cout << "Introduceti un nume de producator!\n";
-	std::cin >> producator;
-}
-
-void readModel(std::string& model) {
-	std::cout << "Introduceti un model de masina!\n";
-	std::cin >> model;
-}
-
-void readType(std::string& type) {
-	std::cout << "Introduceti un tip de masina!\n";
-	std::cin >> type;
-}
-// The end //
 
 void UI::addCar()
 {
 	std::string NrInmatriculare, Producator, Model, Tip;
-	readNRInmatriculare(NrInmatriculare);
-	readProducator(Producator);
-	readModel(Model);
-	readType(Tip);
+	readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+	readField(Producator, "Introduceti nume de producator", ValidateCarProducer);
+	readField(Model, "Introduceti nume model masina", ValidateCarModel);
+	readField(Tip, "Introduceti tip masina", ValidateCarType);
 
 	controller.addCar(NrInmatriculare, Producator, Model, Tip);
 }
 
 void UI::removeCar()
 {
-	std::string nrInmatriculare;
-	readNRInmatriculare(nrInmatriculare);
+	std::string NrInmatriculare;
+    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
 
-	controller.removeCar(nrInmatriculare);
+	controller.removeCar(NrInmatriculare);
 }
-
 
 void UI::printAllCars() const
 {
 	const std::vector<Car>& masini = controller.getCarList();
 
-	for ( const auto& car : masini) {
+	for ( const auto& car : masini)
 		std::cout << car << '\n';
-	}
 }
 
 void UI::updateCar()
 {
 	std::string NrInmatriculare, Producator, Model, Tip;
-	readNRInmatriculare(NrInmatriculare);
-	readProducator(Producator);
-	readModel(Model);
-	readType(Tip);
+    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+    readField(Producator, "Introduceti nume de producator", ValidateCarProducer);
+    readField(Model, "Introduceti nume model masina", ValidateCarModel);
+    readField(Tip, "Introduceti tip masina", ValidateCarType);
 
 	controller.modifyCar(NrInmatriculare, Producator, Model, Tip);
 }
@@ -126,9 +121,14 @@ void UI::updateCar()
 void UI::searchCar() const
 {
 	std::string NrInmatriculare;
+    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
 
 	std::unique_ptr<Car> masinutza = controller.searchCar(NrInmatriculare);
-	std::cout << masinutza;
+    if (masinutza == nullptr) {
+        std::cerr << "Masina nu a fost gasita!\n";
+        return;
+    }
+	std::cout << *masinutza << '\n';
 }
 
 void UI::filteredPrint() const

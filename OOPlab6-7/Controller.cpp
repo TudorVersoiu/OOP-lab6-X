@@ -1,22 +1,23 @@
-#include "Controller.h"
 #include <algorithm>
-
+#include "Controller.h"
+#include "CarValidator.h"
 
 
 void Controller::addCar(const std::string & nrInmatriculare, const std::string & producator,
 						const std::string & model,           const std::string & tip) {
 	Car newMasina = Car(nrInmatriculare, producator, model, tip);
-	repository.InsertCar(newMasina);
+    
+    repository.InsertCar(newMasina);
 }
 
-void Controller::removeCar(const std::string & nrInmatriculare)
-{
+void Controller::removeCar(const std::string & nrInmatriculare) {
 	repository.DeleteCar(nrInmatriculare);
 }
 
-void Controller::modifyCar(const std::string & nrInmatriculare, const std::string & producator, const std::string & mode, const std::string & tip)
+void Controller::modifyCar(const std::string & nrInmatriculare, const std::string & producator,
+                           const std::string & model,            const std::string & tip)
 {
-	Car newCar = Car(nrInmatriculare, producator, mode, tip);
+	Car newCar = Car(nrInmatriculare, producator, model, tip);
 	repository.DeleteCar(nrInmatriculare);
 	repository.InsertCar(newCar);
 }
@@ -26,7 +27,7 @@ const std::vector<Car>& Controller::getCarList() const noexcept
 	return repository.getCarList();
 }
 
-std::unique_ptr<Car> Controller::searchCar(const std::string nrInmatriculare) const
+std::unique_ptr<Car> Controller::searchCar(const std::string& nrInmatriculare) const
 {
 	for (const auto& masina : repository.getCarList())
 		if (masina.getNRInmatriculare() == nrInmatriculare)
@@ -39,11 +40,9 @@ std::unique_ptr<std::vector<Car>> Controller::getFilteredCars(const std::string&
 	std::unique_ptr<std::vector<Car>> masini(std::make_unique<std::vector<Car>>());
 	const std::vector<Car>& allCars = repository.getCarList();
 	for (const auto& car : allCars) {
-		if (producator.size() > 0 and car.getproducator() != producator)
-			continue;
-		if (tip.size() > 0 and car.gettip() != tip)
-			continue;
-
+		if (producator.size() and car.getproducator() != producator) continue;
+		if (tip.size() and car.gettip() != tip) continue;
+        
 		masini->push_back(car);
 	}
 

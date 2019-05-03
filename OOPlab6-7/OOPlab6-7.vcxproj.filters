@@ -13,6 +13,12 @@
     <Filter Include="Domain">
       <UniqueIdentifier>{3070c159-65b8-455c-a90e-cf5252bb8e8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Validator">
+      <UniqueIdentifier>{4e948f3d-231b-452c-897f-c2f972f8fba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyExceptions">
+      <UniqueIdentifier>{d88a78a8-e9fa-4752-8f40-929d2af010b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controller.cpp">
@@ -34,6 +40,9 @@
     <ClCompile Include="TestCar.cpp">
       <Filter>Domain</Filter>
     </ClCompile>
+    <ClCompile Include="CarValidator.cpp">
+      <Filter>Validator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -53,6 +62,15 @@
     </ClInclude>
     <ClInclude Include="TestCar.h">
       <Filter>Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="CarValidator.h">
+      <Filter>Validator</Filter>
+    </ClInclude>
+    <ClInclude Include="repository_exception.h">
+      <Filter>MyExceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="validation_exception.h">
+      <Filter>MyExceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

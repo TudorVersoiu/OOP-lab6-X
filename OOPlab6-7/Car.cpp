@@ -3,21 +3,12 @@
 #include <iostream>
 
 Car::Car(const std::string& NRInmatriculare, const std::string& producator,
-	const std::string& model, const std::string& tip)
+         const std::string& model, const std::string& tip)
 {
 	this->NRInmatriculare = NRInmatriculare;
 	this->producator = producator;
 	this->model = model;
 	this->tip = tip;
-}
-
-Car::Car(const Car & other)
-{
-	std::cout << "Un car a fost copiat";
-	this->model = other.model;
-	this->NRInmatriculare = other.NRInmatriculare;
-	this->producator = other.producator;
-	this->tip = other.tip;
 }
 
 

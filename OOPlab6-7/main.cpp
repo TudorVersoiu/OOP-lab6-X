@@ -15,7 +15,7 @@
 
 int main()
 {
-#if _DEBUG // Defined by MSVC
+#if _DEBUG // Defined by MSVC++
 	TestController();
 	TestCar();
 #endif
@@ -30,4 +30,6 @@ int main()
 		std::cerr << "Unhandled exception";
 		system("PAUSE"); // Debug purposes
 	}
+
+    return 0;
 }
