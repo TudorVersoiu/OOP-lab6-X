@@ -42,6 +42,7 @@ std::unique_ptr<std::vector<Car>> Controller::getFilteredCars(const std::string&
 	for (const auto& car : allCars) {
 		if (producator.size() and car.getproducator() != producator) continue;
 		if (tip.size() and car.gettip() != tip) continue;
+        // Filter options
         
 		masini->push_back(car);
 	}
