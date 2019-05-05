@@ -1,6 +1,6 @@
 #pragma once
 // Fisier de la istvan, teste
-
+// Not my code either
 
 #include <string>
 class Pet

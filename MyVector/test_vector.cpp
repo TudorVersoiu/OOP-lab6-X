@@ -7,6 +7,8 @@
 #include <assert.h>
 #include <vector>
 
+// not my code :D
+
 /*
   Functie folosit in teste
   primeste vector prin valoare -> copy constructor
@@ -88,5 +90,6 @@ int main() {
     testAll<my::vector<Pet>>();
 
     _CrtDumpMemoryLeaks();
+
     return 0;
 }
