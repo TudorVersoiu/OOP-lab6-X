@@ -20,6 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_vector.hpp" />
+    <ClInclude Include="Pet.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pet.cpp" />
+    <ClCompile Include="test_vector.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
