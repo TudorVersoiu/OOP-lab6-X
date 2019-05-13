@@ -25,6 +25,6 @@ public:
 
     /* TODO: Mayyybe fix searCar */
 	std::unique_ptr<Car> searchCar(const std::string& nrInmatriculare) const;
-	std::unique_ptr< std::vector<Car> > getFilteredCars(const std::string& producator, const std::string& tip) const;
+    void getFilteredCars(const std::string& producator, const std::string& tip, std::vector<Car>& output) const;
 	std::unique_ptr< std::vector<Car> > getSortedCars() const;
 };

@@ -6,6 +6,7 @@
 #include <vector>
 #include <exception>
 #include <functional>
+#include <algorithm>
 
 // Define it here so it's not visible from the header
 enum Commands_t {
@@ -22,21 +23,20 @@ enum Commands_t {
 
 int UI::runPrompt()
 {
-	// Commands data structure
-	static std::map<Commands_t, std::string> menu = {
-		{ AddCar, "AddCar" },
-		{ RemoveCar, "RemoveCar" },
-		{ UpdateCar, "ModifyCar" },
-		{ PrintAllCars, "PrintAllCars" },
-		{ SearchCar, "SearchCar" },
-		{ FilteredPrint, "FilteredPrint" },
-		{ SortedPrint, "SortedPrint"},
-		{ Exit, "Exit" }                            };
+    // Commands data structure
+    static std::map<Commands_t, std::string> menu = {
+        { AddCar, "AddCar" },
+        { RemoveCar, "RemoveCar" },
+        { UpdateCar, "ModifyCar" },
+        { PrintAllCars, "PrintAllCars" },
+        { SearchCar, "SearchCar" },
+        { FilteredPrint, "FilteredPrint" },
+        { SortedPrint, "SortedPrint"},
+        { Exit, "Exit" } };
 
-	std::cout << "Comenzi disponibile: \n";
-	// Print avaible commands
-	for (std::map<Commands_t, std::string>::iterator it = menu.begin(); it != menu.end(); it++)
-		std::cout << it->first << "." << it->second << '\n';
+    std::cout << "Comenzi disponibile: \n";
+    // Print avaible commands
+    std::for_each(menu.begin(), menu.end(), [](auto a) {std::cout << a.first << ". " << a.second << '\n'; });
 
 	// Read user input and display prompt
     int user_input; std::cout << ">>: "; std::cin >> user_input; std::cin.get();
@@ -103,8 +103,7 @@ void UI::printAllCars() const
 {
 	const std::vector<Car>& masini = controller.getCarList();
 
-	for ( const auto& car : masini)
-		std::cout << car << '\n';
+	for ( const auto& car : masini) std::cout << car << '\n';
 }
 
 void UI::updateCar()

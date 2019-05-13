@@ -30,6 +30,7 @@ void TestRemove(Controller& test_controller)
 	test_controller.removeCar("GJ 16 GTR");
 	test_controller.removeCar("GJ 22 GTR");
 
+    
 
 	assert(test_controller.searchCar("GJ 35 GTR").get() == nullptr);
 	assert(test_controller.searchCar("CJ 01 JFK").get() == nullptr);
