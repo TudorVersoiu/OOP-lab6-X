@@ -45,7 +45,7 @@ public:
 
 	// Returneaza o lista care contine masinile care satisfac parametrii
 	// Daca un parametru este 0-length, nu este luat in considerare
-	void Controller::getFilteredCars(
+	void getFilteredCars(
 		const std::string& producator,
 		const std::string& tip,
 		std::vector<Car>& output
