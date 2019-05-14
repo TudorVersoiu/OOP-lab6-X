@@ -3,34 +3,40 @@
 #include "CarValidator.h"
 
 
-void Controller::addCar(const std::string & nrInmatriculare, const std::string & producator,
-						const std::string & model,           const std::string & tip) {
-	Car newMasina = Car(nrInmatriculare, producator, model, tip);
+void Controller::addCar(
+	const std::string & nr_inmatriculare,
+	const std::string & producator,
+	const std::string & model,
+	const std::string & tip
+	) {
+	Car new_car = Car(nr_inmatriculare, producator, model, tip);
     
-    repository.InsertCar(newMasina);
+    repository.InsertCar(new_car);
 }
 
-void Controller::removeCar(const std::string & nrInmatriculare) {
-	repository.DeleteCar(nrInmatriculare);
+void Controller::removeCar(const std::string & nr_inmatriculare) {
+	repository.DeleteCar(nr_inmatriculare);
 }
 
-void Controller::modifyCar(const std::string & nrInmatriculare, const std::string & producator,
-                           const std::string & model,            const std::string & tip)
-{
-	Car newCar = Car(nrInmatriculare, producator, model, tip);
-	repository.DeleteCar(nrInmatriculare);
+void Controller::modifyCar(
+	const std::string & nr_inmatriculare,
+	const std::string & producator,
+    const std::string & model,
+	const std::string & tip
+	) {
+	Car newCar = Car(nr_inmatriculare, producator, model, tip);
+	repository.DeleteCar(nr_inmatriculare);
 	repository.InsertCar(newCar);
 }
 
-const std::vector<Car>& Controller::getCarList() const noexcept
-{
+const std::vector<Car>& Controller::getCarList() const noexcept {
 	return repository.getCarList();
 }
 
-std::unique_ptr<Car> Controller::searchCar(const std::string& nrInmatriculare) const
+std::unique_ptr<Car> Controller::searchCar(const std::string& nr_inmatriculare) const
 {
 	for (const auto& masina : repository.getCarList())
-		if (masina.getNRInmatriculare() == nrInmatriculare)
+		if (masina.getNRInmatriculare() == nr_inmatriculare)
 			return std::unique_ptr<Car>( std::make_unique<Car>(masina) );
 	return std::unique_ptr<Car>(nullptr);
 }
