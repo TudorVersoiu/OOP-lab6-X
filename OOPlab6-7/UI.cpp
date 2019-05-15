@@ -51,12 +51,12 @@ int UI::runPrompt()
             case Commands_t::SearchCar:         searchCar();        break;
             case Commands_t::FilteredPrint:     filteredPrint();    break;
             case Commands_t::SortedPrint:       sortedPrint();      break;
-            case Commands_t::Exit:              std::cerr << "Exitting application!";   return 0;
+            case Commands_t::Exit:              std::cerr << "Inchidere aplicatie!!!";   return 0;
             default:                            std::cerr << "Comanda invalida!";       break;
 		}
 	}
-	catch (const repository_exception& eroare) {
-		std::cerr << eroare.what() << '\n';
+	catch (const repository_exception& repository_error) {
+		std::cerr << repository_error.what() << '\n';
 	}
 
 
@@ -73,8 +73,8 @@ void readField(std::string& field, const std::string& prompt, std::function<void
             validate(field);
             return;
         }
-        catch (const validation_exception& err) {
-            std::cout << err.what() << '\n';
+        catch (const validation_exception& validation_error) {
+            std::cout << validation_error.what() << '\n';
         }
     }
 }
@@ -82,86 +82,86 @@ void readField(std::string& field, const std::string& prompt, std::function<void
 
 void UI::addCar()
 {
-	std::string NrInmatriculare, Producator, Model, Tip;
-	readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
-	readField(Producator, "Introduceti nume de producator", ValidateCarProducer);
-	readField(Model, "Introduceti nume model masina", ValidateCarModel);
-	readField(Tip, "Introduceti tip masina", ValidateCarType);
+	std::string registration_number, producer, model, type;
+	readField(registration_number, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+	readField(producer, "Introduceti nume de producator", ValidateCarProducer);
+	readField(model, "Introduceti nume model masina", ValidateCarModel);
+	readField(type, "Introduceti tip masina", ValidateCarType);
 
-	controller.addCar(NrInmatriculare, Producator, Model, Tip);
+	controller.addCar(registration_number, producer, model, type);
 }
 
 void UI::removeCar()
 {
-	std::string NrInmatriculare;
-    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+	std::string registration_number;
+    readField(registration_number, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
 
-	controller.removeCar(NrInmatriculare);
+	controller.removeCar(registration_number);
 }
 
 void UI::printAllCars() const
 {
-	const std::vector<Car>& masini = controller.getCarList();
+	const std::vector<Car>& all_car_list = controller.getCarList();
 
-	for ( const auto& car : masini) std::cout << car << '\n';
+	for ( const auto& car : all_car_list) std::cout << car << '\n';
 }
 
 void UI::updateCar()
 {
-	std::string NrInmatriculare, Producator, Model, Tip;
-    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
-    readField(Producator, "Introduceti nume de producator", ValidateCarProducer);
-    readField(Model, "Introduceti nume model masina", ValidateCarModel);
-    readField(Tip, "Introduceti tip masina", ValidateCarType);
+	std::string registration_number, producer, model, type;
+    readField(registration_number, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+    readField(producer, "Introduceti nume de producator", ValidateCarProducer);
+    readField(model, "Introduceti nume model masina", ValidateCarModel);
+    readField(type, "Introduceti tip masina", ValidateCarType);
 
-	controller.modifyCar(NrInmatriculare, Producator, Model, Tip);
+	controller.modifyCar(registration_number, producer, model, type);
 }
 
 void UI::searchCar() const
 {
-	std::string NrInmatriculare;
-    readField(NrInmatriculare, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
+	std::string registration_number;
+    readField(registration_number, "Introduceti numarul de inmatriculare", ValidateCarRegistration);
 
-	std::unique_ptr<Car> masinutza = controller.searchCar(NrInmatriculare);
-    if (masinutza == nullptr) {
+	std::unique_ptr<Car> found_car = controller.searchCar(registration_number);
+    if (found_car == nullptr) {
         std::cerr << "Masina nu a fost gasita!\n";
         return;
     }
-	std::cout << *masinutza << '\n';
+	std::cout << *found_car << '\n';
 }
 
 void UI::filteredPrint() const
 {
 	std::cout << "Sortati dupa producator(Y, N)?";
-	std::string raspuns;  std::cin >> raspuns;
+	std::string user_producer_answer;  std::cin >> user_producer_answer;
 
-	std::string producator;
-	if (raspuns == "Y")
+	std::string producer;
+	if (user_producer_answer == "Y")
 	{
 		std::cout << "Introduceti producator cautare";
-		std::cin >> producator;
+		std::cin >> producer;
 	}
 
 	std::cout << "Sortati dupa tip(Y, N)?";
-	std::string raspuns2;  std::cin >> raspuns2;
+	std::string user_type_answer;  std::cin >> user_type_answer;
 
-	std::string tip;
-	if (raspuns2 == "Y")
+	std::string type;
+	if (user_type_answer == "Y")
 	{
 		std::cout << "Introduceti tip cautare";
-		std::cin >> tip;
+		std::cin >> type;
 	}
 
-	std::unique_ptr< std::vector<Car> > pSearchResult( controller.getFilteredCars(producator, tip) );
-	for (const auto& masinutza : *pSearchResult) {
-		std::cout << masinutza << '\n';
+	std::unique_ptr< std::vector<Car> > p_filter_results( controller.getFilteredCars(producer, type) );
+	for (const auto& car : *p_filter_results) {
+		std::cout << car << '\n';
 	}
 }
 
 void UI::sortedPrint() const
 {
-	std::unique_ptr< std::vector<Car> > pSearchResult(controller.getSortedCars());
-	for (const auto& masinutza : *pSearchResult) {
+	std::unique_ptr< std::vector<Car> > p_sort_results(controller.getSortedCars());
+	for (const auto& masinutza : *p_sort_results) {
 		std::cout << masinutza << '\n';
 	}
 }

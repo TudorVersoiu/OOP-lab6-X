@@ -1,35 +1,33 @@
 #include "Car.h"
 #include <string>
 #include <iostream>
-#include <tuple>
 
 Car::Car(
-	const std::string& NRInmatriculare,
-	const std::string& producator,
-    const std::string& model,
-	const std::string& tip
-	) {
-	this->NRInmatriculare = NRInmatriculare;
-	this->producator = producator;
+        const std::string& registration_number,
+        const std::string& producer,
+        const std::string& model,
+        const std::string& type ) {
+	this->registration_number = registration_number;
+	this->producer = producer;
 	this->model = model;
-	this->tip = tip;
+	this->type = type;
 }
 
-// Getters section = = = = = = = = = = = = = = = = = = = = = = =
-const std::string & Car::getNRInmatriculare() const noexcept {
-	return NRInmatriculare;
+
+const std::string & Car::get_registration_number() const noexcept {
+	return registration_number;
 }
 
-const std::string & Car::getproducator() const noexcept {
-	return producator;
+const std::string & Car::get_producer() const noexcept {
+	return producer;
 }
 
-const std::string & Car::getmodel() const noexcept {
+const std::string & Car::get_model() const noexcept {
 	return model;
 }
 
-const std::string & Car::gettip() const noexcept {
-	return tip;
+const std::string & Car::get_type() const noexcept {
+	return type;
 }
 
 // Car comparison operator
@@ -40,6 +38,6 @@ bool Car::operator<(const Car & other) noexcept {
 
 // operator for printing a car to stdout
 std::ostream& operator<<(std::ostream& out, const Car& masina) {
-	out << masina.NRInmatriculare << ' ' << masina.producator << ' ' << masina.model << ' ' << masina.tip;
+	out << masina.registration_number << ' ' << masina.producer << ' ' << masina.model << ' ' << masina.type;
 	return out;
 }

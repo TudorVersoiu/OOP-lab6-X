@@ -10,10 +10,10 @@ void TestAdd_Search(Controller& test_controller)
 	test_controller.addCar("GJ 16 GTR", "Nissan", "R35-GTR", "Supercar");
 	test_controller.addCar("GJ 22 GTR", "Lancia", "R35-GT" , "Dubita"  );
 
-	assert(test_controller.searchCar("GJ 35 GTR")->getNRInmatriculare() == "GJ 35 GTR");
-	assert(test_controller.searchCar("CJ 01 JFK")->getNRInmatriculare() == "CJ 01 JFK");
-	assert(test_controller.searchCar("GJ 16 GTR")->getNRInmatriculare() == "GJ 16 GTR");
-	assert(test_controller.searchCar("GJ 22 GTR")->getNRInmatriculare() == "GJ 22 GTR");
+	assert(test_controller.searchCar("GJ 35 GTR")->get_registration_number() == "GJ 35 GTR");
+	assert(test_controller.searchCar("CJ 01 JFK")->get_registration_number() == "CJ 01 JFK");
+	assert(test_controller.searchCar("GJ 16 GTR")->get_registration_number() == "GJ 16 GTR");
+	assert(test_controller.searchCar("GJ 22 GTR")->get_registration_number() == "GJ 22 GTR");
 
 	try {
 		test_controller.addCar("GJ 35 GTR", "Nissan", "R35-GTR", "Supercar"); assert(false);
@@ -53,27 +53,27 @@ void TestModify(Controller& test_controller)
 	test_controller.modifyCar("GJ 16 GTR", "test3", "test3", "test3");
 	test_controller.modifyCar("GJ 22 GTR", "test4", "test4", "test4");
 
-	assert(test_controller.searchCar("GJ 35 GTR")->getproducator() == "test1");
-	assert(test_controller.searchCar("CJ 01 JFK")->getproducator() == "test2");
-	assert(test_controller.searchCar("GJ 16 GTR")->getproducator() == "test3");
-	assert(test_controller.searchCar("GJ 22 GTR")->getproducator() == "test4");
+	assert(test_controller.searchCar("GJ 35 GTR")->get_producer() == "test1");
+	assert(test_controller.searchCar("CJ 01 JFK")->get_producer() == "test2");
+	assert(test_controller.searchCar("GJ 16 GTR")->get_producer() == "test3");
+	assert(test_controller.searchCar("GJ 22 GTR")->get_producer() == "test4");
 }
 
 void TestSort(const Controller& test_controller)
 {
 	auto lista_masini = test_controller.getSortedCars();
 
-	assert(lista_masini->at(0).getNRInmatriculare() == "CJ 01 JFK");
-	assert(lista_masini->at(1).getNRInmatriculare() == "GJ 16 GTR");
-	assert(lista_masini->at(2).getNRInmatriculare() == "GJ 22 GTR");
-	assert(lista_masini->at(3).getNRInmatriculare() == "GJ 35 GTR");
+	assert(lista_masini->at(0).get_registration_number() == "CJ 01 JFK");
+	assert(lista_masini->at(1).get_registration_number() == "GJ 16 GTR");
+	assert(lista_masini->at(2).get_registration_number() == "GJ 22 GTR");
+	assert(lista_masini->at(3).get_registration_number() == "GJ 35 GTR");
 }
 
 void TestFilter(const Controller& test_controller)
 {
 	auto result = test_controller.getFilteredCars("test1", "");
 
-	assert(result->at(0).getNRInmatriculare() == "GJ 35 GTR");
+	assert(result->at(0).get_registration_number() == "GJ 35 GTR");
 }
 
 void TestController()

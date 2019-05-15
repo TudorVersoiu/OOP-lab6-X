@@ -2,9 +2,9 @@
 
 void Repository::InsertCar(const Car & masina)
 {
-	if ( findElement(masina.getNRInmatriculare()) != masini.end() )
+	if ( findElement(masina.get_registration_number()) != masini.end() )
 		throw
-            repository_exception( std::string("Masina ") + masina.getNRInmatriculare() +
+            repository_exception( std::string("Masina ") + masina.get_registration_number() +
 			std::string(" deja se afla in baza de date!!!") );
 
 	masini.push_back(masina);
@@ -23,7 +23,7 @@ Repository::iterator Repository::findElement(std::string NrInmatriculare)
 {
 	std::vector<Car>::iterator it;
 	for (it = masini.begin(); it != masini.end(); it++)
-		if (it->getNRInmatriculare() == NrInmatriculare)
+		if (it->get_registration_number() == NrInmatriculare)
 			break;
 
 	return it;
