@@ -6,11 +6,11 @@
 
 //9 Inchiriere masini
 //Creati o aplicatie care permite :
-// gestiunea unei liste de masini.Masina : nrInmatriculare, producator, model, tip
+// gestiunea unei liste de masini.Masina : nrInmatriculare, producer, model, type
 // adaugare, stergere, modificare si afisare masini
 // cautare masina
-// filtrare masini dupa : producator, tip
-// sortare masini dupa : nrInmatriculare, tip, producator + model
+// filtrare masini dupa : producer, type
+// sortare masini dupa : nrInmatriculare, type, producer + model
 
 
 int main()
@@ -21,9 +21,9 @@ int main()
 #endif
 
 
-	UI applicatie;
+	UI application;
 	try {
-		while (applicatie.runPrompt());
+		while (application.runPrompt());
 	}
 	catch (...)
 	{

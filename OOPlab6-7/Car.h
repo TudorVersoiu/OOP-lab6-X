@@ -2,22 +2,24 @@
 #include <string>
 
 class Car {
-	std::string NRInmatriculare;
-	std::string producator;
+	std::string registration_number;
+	std::string producer;
 	std::string model;
-	std::string tip;
+	std::string type;
 public:
-	Car(const std::string& NRInmatriculare, const std::string& producator,
-		const std::string& model, const std::string& tip);
+	Car(const std::string& registration_number,
+        const std::string& producer,
+		const std::string& model,
+        const std::string& type);
 
     // Getters
-	const std::string& getNRInmatriculare() const noexcept;
-	const std::string& getproducator() const noexcept;
-	const std::string& getmodel() const noexcept;
-	const std::string& gettip() const noexcept;
+	const std::string& get_registration_number() const noexcept;
+	const std::string& get_producer() const noexcept;
+	const std::string& get_model() const noexcept;
+	const std::string& get_type() const noexcept;
 
 	bool operator<(const Car& other) noexcept;
 
-    // output car
+    // stream operator, for printing
 	friend std::ostream& operator<<(std::ostream&, const Car&);
 };

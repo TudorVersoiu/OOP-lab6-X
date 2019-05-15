@@ -6,10 +6,10 @@
 void TestGetters()
 {
 	Car masina("1", "2", "3", "4");
-	assert(masina.getNRInmatriculare() == "1");
-	assert(masina.getproducator() == "2");
-	assert(masina.getmodel() == "3");
-	assert(masina.gettip() == "4");
+	assert(masina.get_registration_number() == "1");
+	assert(masina.get_producer() == "2");
+	assert(masina.get_model() == "3");
+	assert(masina.get_type() == "4");
 }
 
 void TestCompare()
