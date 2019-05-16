@@ -13,7 +13,7 @@ Car::Car(
 	this->model = model;
 	this->type = type;
 }
-
+ 
 
 const std::string & Car::get_registration_number() const noexcept {
 	return registration_number;
@@ -34,7 +34,7 @@ const std::string & Car::get_type() const noexcept {
 // Car comparison operator
 bool Car::operator<(const Car & other) noexcept {
 	return std::tie(this->registration_number, this->producer, this->type, this->model)
-			< std::tie(other.registration_number, other.producer, other.type, other.model);
+		 < std::tie(other.registration_number, other.producer, other.type, other.model);
 }
 
 // operator for printing a car to stdout

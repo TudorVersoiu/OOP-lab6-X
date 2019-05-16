@@ -20,7 +20,6 @@ int main()
 	TestCar();
 #endif
 
-
 	UI application;
 	try {
 		while (application.runPrompt());
