@@ -26,17 +26,17 @@ protected:
 	void base_car_delete(const std::string& registration_number);
 
 public:
-	const_iterator find(const std::string& nr_inmatriculare) const;
+	const_iterator find(const std::string& registration_number) const;
 	iterator begin() noexcept;
 	iterator end() noexcept;
 };
 
-
+// ================================= Pure abstract class ============================
 class Repository: public _base_repository {
 public:
 	// Inserts a new car into repository
 	void InsertCar(const Car& masina) override;
-	void DeleteCar(const std::string& nr_inmatriculare) override;
+	void DeleteCar(const std::string& registration_number) override;
 };
 
 
@@ -48,6 +48,8 @@ private:
 	void save_to_file();
 	void load_from_file();
 public:
+	FileRepository(const std::string& cars_filename = "cars.csv");
+
 	void InsertCar(const Car& masina) override;
-	void DeleteCar(const std::string& nr_inmatriculare) override;
+	void DeleteCar(const std::string& registration_number) override;
 };

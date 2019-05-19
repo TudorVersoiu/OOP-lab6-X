@@ -67,3 +67,5 @@ void FileRepository::DeleteCar(const std::string& registration_number) {
 	_base_repository::base_car_delete(registration_number);
 	save_to_file();
 }
+
+FileRepository::FileRepository(const std::string& cars_filename = "cars.csv"): filename(cars_filename) {  }
