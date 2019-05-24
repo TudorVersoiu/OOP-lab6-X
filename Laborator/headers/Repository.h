@@ -2,24 +2,54 @@
 #include <vector>
 #include <memory>
 #include <exception>
+#include <unordered_map>
 #include "Car.h"
 #include "repository_exception.h"
 
+// Repository interface for methods which can vary
+class _repository_interface {
+public:
+	// Methods which can vary depending on repository
+	virtual void InsertCar(const Car& car_object);
+	virtual void DeleteCar(const std::string& registration_number);
+};
 
-class Repository
-{
-private:
-	std::vector< Car > masini;
+// Define basic operations common to all repositories
+class _base_repository: public _repository_interface {
+protected:
+	typedef std::unordered_map<std::string, Car>::iterator iterator;
+	typedef std::unordered_map<std::string, Car>::const_iterator const_iterator;
+	std::unordered_map<std::string, Car > car_collection;
 
-	typedef std::vector<Car>::iterator iterator;
+	// Basic functionality
+	void base_car_insert(const Car& car_object);
+	void base_car_delete(const std::string& registration_number);
 
 public:
-	void InsertCar(const Car& masina);
-	void DeleteCar(const std::string nrInmatriculare);
+	const_iterator find(const std::string& registration_number) const;
+	iterator begin() noexcept;
+	iterator end() noexcept;
+};
 
-	// Finds and returns a reference to the object
-	// Returns end() if no such element is found
-	Repository::iterator findElement(std::string NrInmatriculare);
+// ================================= Pure abstract class ============================
+class Repository: public _base_repository {
+public:
+	// Inserts a new car into repository
+	void InsertCar(const Car& masina) override;
+	void DeleteCar(const std::string& registration_number) override;
+};
 
-	const std::vector< Car >& getCarList() const noexcept;
+
+// ================================== FileRepository =================================
+class FileRepository: public _base_repository {
+private:
+	const std::string filename;
+
+	void save_to_file();
+	void load_from_file();
+public:
+	FileRepository(const std::string& cars_filename = "cars.csv");
+
+	void InsertCar(const Car& masina) override;
+	void DeleteCar(const std::string& registration_number) override;
 };
